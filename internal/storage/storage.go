@@ -12,7 +12,7 @@ var (
 	ErrorUserDuplicate = errors.New("student with given username already exists")
 )
 
-type Storage interface {
+type User interface {
 	Save(context.Context, model.User) error
 	LoadUserPass(context.Context, string, string) (model.User, error)
 }
