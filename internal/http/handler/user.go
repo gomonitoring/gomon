@@ -91,3 +91,8 @@ func (u User) Login(c *fiber.Ctx) error {
 
 	return c.Status(http.StatusOK).JSON(fiber.Map{"token": t})
 }
+
+func (u User) Register(g fiber.Router) {
+	g.Post("/login", u.Login)
+	g.Post("/signup", u.SignUp)
+}
