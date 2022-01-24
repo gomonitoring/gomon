@@ -9,7 +9,7 @@ import (
 
 var (
 	ErrorUserNotFound  = errors.New("user with given username doesn't exist")
-	ErrorUserDuplicate = errors.New("student with given username already exists")
+	ErrorUserDuplicate = errors.New("user with given username already exists")
 )
 
 type User interface {
