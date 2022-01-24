@@ -2,6 +2,7 @@ package main
 
 import (
 	"log"
+	"os"
 
 	jwtware "github.com/gofiber/jwt/v3"
 	"github.com/gomonitoring/http-server/internal/database"
@@ -25,13 +26,13 @@ func main() {
 	app := fiber.New()
 	// read secret from configmap
 	app.Use(jwtware.New(jwtware.Config{
-		SigningKey: []byte("secret"),
+		SigningKey: []byte(os.Getenv("JWT_SECRET")),
 	}))
 	userg := app.Group("/user")
 	hu.Register(userg)
 
-	// read port from configmap
-	if err := app.Listen(":8080"); err != nil {
+	// read port from configmap, ":8080"
+	if err := app.Listen(os.Getenv("LISTEN_PORT")); err != nil {
 		log.Println("cannot start the server")
 	}
 }
