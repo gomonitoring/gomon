@@ -1,8 +1,10 @@
 package model
 
+import "gorm.io/gorm"
+
 type User struct {
-	ID       string
-	Username string
+	gorm.Model
+	Username string `gorm:"unique"`
 	Password string
 	UrlCount int
 }
