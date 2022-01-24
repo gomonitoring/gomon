@@ -1,9 +1,10 @@
 # Start from the latest golang base image
-FROM golang
+FROM golang:alpine
 
-RUN apt-get update --fix-missing && \
-    apt-get upgrade -y && \
-    apt-get install -y netcat --fix-missing
+RUN apk update && \
+    apk upgrade && \
+    apk add bash && \
+    apk add netcat-openbsd
 
 
 # Set the Current Working Directory inside the container
