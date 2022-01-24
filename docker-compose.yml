@@ -1,0 +1,32 @@
+version: "3.7"
+
+services:
+  db:
+    image: m.docker-registry.ir/postgres:10.10
+    volumes:
+      - local_db_data:/var/lib/postgresql/data
+    environment:
+      POSTGRES_USER: postgres-user
+      POSTGRES_PASSWORD: postgres-pass
+      POSTGRES_DB: postgres-db
+
+  server:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    environment:
+      DB_HOST: db
+      DB_PORT: 5432
+      DB_NAME: postgres-db
+      DB_USER: postgres-user
+      DB_PASS: postgres-pass
+      JWT_SECRET: secret
+
+    ports:
+      - "8010:8080"
+    depends_on:
+      - db
+
+volumes:
+  local_db_data:
+
