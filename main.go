@@ -23,6 +23,10 @@ func main() {
 		Storage: storage.NewPostgresDBStorage(db),
 	}
 
+	hurl := handler.Url{
+		Storage: storage.NewPostgresDBStorage(db),
+	}
+
 	app := fiber.New()
 	userg := app.Group("/user")
 	hu.Register(userg)
@@ -30,6 +34,9 @@ func main() {
 	app.Use(jwtware.New(jwtware.Config{
 		SigningKey: []byte(os.Getenv("JWT_SECRET")),
 	}))
+
+	urlg := app.Group("/url")
+	hurl.Register(urlg)
 
 	// read port from configmap, ":8080"
 	if err := app.Listen(":8080"); err != nil {

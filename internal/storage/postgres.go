@@ -37,3 +37,19 @@ func (p PostgresDB) LoadByUserPass(ctx context.Context, username string, passwor
 
 	return user, nil
 }
+
+func (p PostgresDB) SaveUrl(context.Context, model.Url) error {
+	return nil
+}
+
+func (p PostgresDB) GetUrl(context.Context, string) (model.Url, error) {
+	return model.Url{}, nil
+}
+
+func (p PostgresDB) GetUserUrls(context.Context) ([]model.Url, error) {
+	return []model.Url{}, nil
+}
+
+func (p PostgresDB) GetUrlStats(context.Context, model.Url) ([]model.Call, error) {
+	return []model.Call{}, nil
+}
