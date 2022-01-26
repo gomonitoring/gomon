@@ -38,7 +38,7 @@ func (u User) SignUp(c *fiber.Ctx) error {
 		Password: req.Password,
 	}
 
-	if err := u.Storage.Save(c.Context(), user); err != nil {
+	if err := u.Storage.SaveUser(c.Context(), user); err != nil {
 		if errors.Is(err, storage.ErrorUserDuplicate) {
 			return fiber.NewError(http.StatusBadRequest, "user already exists")
 		}

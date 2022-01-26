@@ -13,7 +13,7 @@ var (
 )
 
 type User interface {
-	Save(context.Context, model.User) error
+	SaveUser(context.Context, model.User) error
 	LoadByUserPass(context.Context, string, string) (model.User, error)
 }
 

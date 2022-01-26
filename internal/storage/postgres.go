@@ -17,7 +17,7 @@ func NewPostgresDBStorage(db *gorm.DB) PostgresDB {
 	}
 }
 
-func (p PostgresDB) Save(ctx context.Context, u model.User) error {
+func (p PostgresDB) SaveUser(ctx context.Context, u model.User) error {
 	err := p.db.Create(&u).Error
 	if err != nil {
 		return ErrorUserDuplicate
