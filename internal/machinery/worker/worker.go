@@ -25,7 +25,8 @@ func StartLocalWorker(taskserver *machinery.Server) {
 
 func registerPeriodicTasks(taskserver *machinery.Server) error {
 	signature := &tasks.Signature{
-		Name: "find_urls_to_call",
+		Name:       "find_urls_to_call",
+		RoutingKey: "local",
 	}
 	err := taskserver.RegisterPeriodicTask("* * * * *", "find_urls_to_call", signature)
 	return err
