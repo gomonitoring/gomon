@@ -28,8 +28,8 @@ func CallUrl(url string, id uint, threshhold int, resetTime int64) (string, erro
 }
 
 func encodeCallResult(result CallUrlResult) string {
-	reqJSON, _ := json.Marshal(result)
-	return base64.StdEncoding.EncodeToString(reqJSON)
+	resJSON, _ := json.Marshal(result)
+	return base64.StdEncoding.EncodeToString(resJSON)
 }
 
 func decodeCallResult(b64data string, output interface{}) error {
