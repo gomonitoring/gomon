@@ -91,10 +91,6 @@ func (p PostgresDB) GetUserUrls(ctx context.Context, username string) ([]model.U
 }
 
 func (p PostgresDB) GetUrlStats(ctx context.Context, urlName string, username string) ([]model.Call, error) {
-	//test
-	call := mockCall()
-	p.db.Create(&call)
-	//
 	now := time.Now().Unix()
 	yesterday := time.Now().Add(-24 * time.Hour).Unix()
 	var calls []model.Call
@@ -105,10 +101,6 @@ func (p PostgresDB) GetUrlStats(ctx context.Context, urlName string, username st
 }
 
 func (p PostgresDB) GetAlerts(ctx context.Context, urlName string, username string) ([]model.Alert, error) {
-	//test
-	alert := mockAlert()
-	p.db.Create(&alert)
-	//
 	var alerts []model.Alert
 	p.db.Preload("Url").Preload("Url.User").Where("url_id = (?)", p.db.Table("urls").Select("id").
 		Where("user_id = (?) AND name = ?", p.db.Table("users").Select("id").
