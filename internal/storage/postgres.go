@@ -88,8 +88,10 @@ func (p PostgresDB) GetUrl(context.Context, string) (model.Url, error) {
 	return model.Url{}, nil
 }
 
-func (p PostgresDB) GetUserUrls(context.Context) ([]model.Url, error) {
-	return []model.Url{}, nil
+func (p PostgresDB) GetUserUrls(ctx context.Context, username string) ([]model.Url, error) {
+	var urls []model.Url
+	p.db.Preload("User").Where("user_id = (?)", p.db.Table("users").Select("id").Where("username = ?", username)).Find(&urls)
+	return urls, nil
 }
 
 func (p PostgresDB) GetUrlStats(context.Context, model.Url) ([]model.Call, error) {

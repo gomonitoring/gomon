@@ -23,6 +23,6 @@ type User interface {
 type Url interface {
 	SaveUrl(context.Context, request.Url, string) (model.Url, error)
 	GetUrl(context.Context, string) (model.Url, error)
-	GetUserUrls(context.Context) ([]model.Url, error)
+	GetUserUrls(context.Context, string) ([]model.Url, error)
 	GetUrlStats(context.Context, model.Url) ([]model.Call, error)
 }

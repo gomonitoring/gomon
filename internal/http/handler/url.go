@@ -46,7 +46,18 @@ func (u Url) RegisterUrl(c *fiber.Ctx) error {
 }
 
 func (u Url) GetUrls(c *fiber.Ctx) error {
-	return nil
+	// extract username
+	user := c.Locals("user").(*jwt.Token)
+	claims := user.Claims.(jwt.MapClaims)
+	username := claims["username"].(string)
+
+	urls, err := u.Storage.GetUserUrls(c.Context(), username)
+	if err != nil {
+		log.Printf("cannot save url %s", err)
+		return fiber.ErrInternalServerError
+	}
+
+	return c.Status(http.StatusCreated).JSON(urls)
 }
 
 func (u Url) GetUrlStats(c *fiber.Ctx) error {
