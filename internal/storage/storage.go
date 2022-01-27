@@ -4,6 +4,7 @@ import (
 	"context"
 	"errors"
 
+	"github.com/gomonitoring/http-server/internal/http/request"
 	"github.com/gomonitoring/http-server/internal/model"
 )
 
@@ -18,7 +19,7 @@ type User interface {
 }
 
 type Url interface {
-	SaveUrl(context.Context, model.Url) error
+	SaveUrl(context.Context, request.Url, string) (model.Url, error)
 	GetUrl(context.Context, string) (model.Url, error)
 	GetUserUrls(context.Context) ([]model.Url, error)
 	GetUrlStats(context.Context, model.Url) ([]model.Call, error)

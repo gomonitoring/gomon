@@ -1,7 +1,12 @@
 package handler
 
 import (
+	"log"
+	"net/http"
+
 	"github.com/gofiber/fiber/v2"
+	"github.com/golang-jwt/jwt/v4"
+	"github.com/gomonitoring/http-server/internal/http/request"
 	"github.com/gomonitoring/http-server/internal/storage"
 )
 
@@ -10,7 +15,30 @@ type Url struct {
 }
 
 func (u Url) RegisterUrl(c *fiber.Ctx) error {
-	return nil
+	// extract username
+	user := c.Locals("user").(*jwt.Token)
+	claims := user.Claims.(jwt.MapClaims)
+	username := claims["username"].(string)
+
+	req := new(request.Url)
+	if err := c.BodyParser(req); err != nil {
+		log.Printf("cannot load url data %s", err)
+
+		return fiber.ErrBadRequest
+	}
+	if err := req.Validate(); err != nil {
+		log.Printf("cannot validate url data %s", err)
+
+		return fiber.ErrBadRequest
+	}
+
+	url, err := u.Storage.SaveUrl(c.Context(), *req, username)
+	if err != nil {
+		log.Printf("cannot save url %s", err)
+		return fiber.ErrInternalServerError
+	}
+
+	return c.Status(http.StatusCreated).JSON(url)
 }
 
 func (u Url) GetUrls(c *fiber.Ctx) error {

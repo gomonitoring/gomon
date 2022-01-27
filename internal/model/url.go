@@ -8,8 +8,7 @@ type Url struct {
 	gorm.Model
 	Name      string
 	Url       string
-	Threshold int
-	User      User
-	UserID    int
+	Threshold string
+	Username  string
 	ResetTime int
 }

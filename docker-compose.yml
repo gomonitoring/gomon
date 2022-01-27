@@ -20,6 +20,7 @@ services:
       DB_NAME: postgres-db
       DB_USER: postgres-user
       DB_PASS: postgres-pass
+      MAX_URL_COUNT: 2
       JWT_SECRET: secret
 
     ports:
