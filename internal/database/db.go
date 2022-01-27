@@ -24,7 +24,7 @@ func NewDB() (*gorm.DB, error) {
 	}
 
 	fmt.Println("Connection Opened to Database")
-	db.AutoMigrate(&model.User{}, &model.Url{})
+	db.AutoMigrate(&model.User{}, &model.Url{}, &model.Call{})
 	fmt.Println("Database Migrated")
 
 	return db, nil

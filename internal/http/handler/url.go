@@ -53,15 +53,45 @@ func (u Url) GetUrls(c *fiber.Ctx) error {
 
 	urls, err := u.Storage.GetUserUrls(c.Context(), username)
 	if err != nil {
-		log.Printf("cannot save url %s", err)
+		log.Printf("cannot load urls %s", err)
 		return fiber.ErrInternalServerError
 	}
 
-	return c.Status(http.StatusCreated).JSON(urls)
+	return c.Status(http.StatusOK).JSON(urls)
 }
 
 func (u Url) GetUrlStats(c *fiber.Ctx) error {
-	return nil
+	// extract username
+	user := c.Locals("user").(*jwt.Token)
+	claims := user.Claims.(jwt.MapClaims)
+	username := claims["username"].(string)
+
+	req := new(request.Stats)
+	if err := c.BodyParser(req); err != nil {
+		log.Printf("cannot load stats data %s", err)
+
+		return fiber.ErrBadRequest
+	}
+	if err := req.Validate(); err != nil {
+		log.Printf("cannot validate stats data %s", err)
+
+		return fiber.ErrBadRequest
+	}
+
+	calls, err := u.Storage.GetUrlStats(c.Context(), req.Name, username)
+	if err != nil {
+		log.Printf("cannot load stats %s", err)
+		return fiber.ErrInternalServerError
+	}
+	stats := map[string]int{"successes": 0, "failures": 0}
+	for _, call := range calls {
+		if call.Successful {
+			stats["successes"] += 1
+		} else {
+			stats["failures"] += 1
+		}
+	}
+	return c.Status(http.StatusOK).JSON(stats)
 }
 
 func (u Url) Register(g fiber.Router) {

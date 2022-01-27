@@ -73,7 +73,7 @@ func (p PostgresDB) SaveUrl(ctx context.Context, req request.Url, username strin
 		Url:       req.Url,
 		Threshold: req.Threshold,
 		User:      user,
-		ResetTime: int(time.Now().Unix()),
+		ResetTime: time.Now().Unix(),
 	}
 	er := p.db.Create(&url).Error
 	if er != nil {
@@ -84,16 +84,33 @@ func (p PostgresDB) SaveUrl(ctx context.Context, req request.Url, username strin
 	return url, nil
 }
 
-func (p PostgresDB) GetUrl(context.Context, string) (model.Url, error) {
-	return model.Url{}, nil
-}
-
 func (p PostgresDB) GetUserUrls(ctx context.Context, username string) ([]model.Url, error) {
 	var urls []model.Url
 	p.db.Preload("User").Where("user_id = (?)", p.db.Table("users").Select("id").Where("username = ?", username)).Find(&urls)
 	return urls, nil
 }
 
-func (p PostgresDB) GetUrlStats(context.Context, model.Url) ([]model.Call, error) {
-	return []model.Call{}, nil
+func (p PostgresDB) GetUrlStats(ctx context.Context, urlName string, username string) ([]model.Call, error) {
+	//test
+	call := fakeCalls()
+	p.db.Create(&call)
+	//
+	now := time.Now().Unix()
+	yesterday := time.Now().Add(-24 * time.Hour).Unix()
+	var calls []model.Call
+	p.db.Preload("Url").Preload("Url.User").Where("url_id = (?) AND time BETWEEN ? AND ?", p.db.Table("urls").Select("id").
+		Where("user_id = (?) AND name = ?", p.db.Table("users").Select("id").
+			Where("username = ?", username), urlName), yesterday, now).Find(&calls)
+	return calls, nil
+}
+
+func fakeCalls() []model.Call {
+	now := time.Now().Unix()
+	calls := []model.Call{
+		{Time: now - 1, UrlID: 1},
+		{Time: now - 2, UrlID: 1},
+		{Time: now - 3, UrlID: 1},
+		{Time: 300000000, UrlID: 1},
+	}
+	return calls
 }

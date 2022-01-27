@@ -11,5 +11,5 @@ type Url struct {
 	Threshold string
 	User      User
 	UserID    uint
-	ResetTime int
+	ResetTime int64
 }
