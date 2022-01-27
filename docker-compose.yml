@@ -10,6 +10,9 @@ services:
       POSTGRES_PASSWORD: postgres-pass
       POSTGRES_DB: postgres-db
 
+  task_broker:
+    image: redis
+
   server:
     build:
       context: .
@@ -20,12 +23,15 @@ services:
       DB_NAME: postgres-db
       DB_USER: postgres-user
       DB_PASS: postgres-pass
+      MACHINERY_BROKER: "redis://task_broker:6379"
+      MACHINERY_RESULTS_BACKEND: "redis://task_broker:6379"
       JWT_SECRET: secret
 
     ports:
       - "8010:8080"
     depends_on:
       - db
+      - task_broker
 
 volumes:
   local_db_data:

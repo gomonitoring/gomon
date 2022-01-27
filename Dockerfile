@@ -1,6 +1,8 @@
 # Start from the latest golang base image
 FROM golang:alpine
 
+ENV FUNC=server
+
 RUN apk update && \
     apk upgrade && \
     apk add bash && \
