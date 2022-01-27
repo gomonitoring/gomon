@@ -21,13 +21,17 @@ func NewPostgresDBStorage(db *gorm.DB) PostgresDB {
 	}
 }
 
-func (p PostgresDB) SaveUser(ctx context.Context, u model.User) error {
+func (p PostgresDB) SaveUser(ctx context.Context, req request.User) (model.User, error) {
+	u := model.User{
+		Username: req.Username,
+		Password: req.Password,
+	}
 	err := p.db.Create(&u).Error
 	if err != nil {
-		return ErrorUserDuplicate
+		return model.User{}, ErrorUserDuplicate
 	}
 
-	return nil
+	return u, nil
 }
 
 func (p PostgresDB) LoadByUserPass(ctx context.Context, username string, password string) (model.User, error) {
