@@ -3,6 +3,8 @@ package tasks
 import (
 	"encoding/base64"
 	"encoding/json"
+	"net/http"
+	"time"
 )
 
 type CallUrlResult struct {
@@ -14,15 +16,19 @@ type CallUrlResult struct {
 }
 
 func CallUrl(url string, id uint, threshhold int, resetTime int64) (string, error) {
-	statusCode := 200 // TODO implement sned request and return results
-	var time int64
-	time = 1
+	var statusCode int
+	resp, err := http.Get(url)
+	if err != nil {
+		statusCode = -1
+	} else {
+		statusCode = resp.StatusCode
+	}
 	result := CallUrlResult{
 		Id:         id,
 		StatusCode: statusCode,
 		Threshhold: threshhold,
 		ResetTime:  resetTime,
-		Time:       time,
+		Time:       time.Now().Unix(),
 	}
 	return encodeCallResult(result), nil
 }
