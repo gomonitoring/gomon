@@ -9,7 +9,7 @@ func StartMonitoringWorker(taskserver *machinery.Server) error {
 
 	worker := taskserver.NewCustomQueueWorker("monitoring_worker", settings.MonitoringWorkerConcurrency, "monitoring")
 	if err := worker.Launch(); err != nil {
-		return err
+		panic(err.Error())
 	}
 	return nil
 }
@@ -18,7 +18,7 @@ func StartLocalWorker(taskserver *machinery.Server) error {
 
 	worker := taskserver.NewCustomQueueWorker("local_worker", settings.LocalWorkerConcurrency, "local")
 	if err := worker.Launch(); err != nil {
-		return err
+		panic(err.Error())
 	}
 	return nil
 }
