@@ -1,6 +1,7 @@
 package handler
 
 import (
+	"errors"
 	"log"
 	"net/http"
 
@@ -34,6 +35,9 @@ func (u Url) RegisterUrl(c *fiber.Ctx) error {
 
 	url, err := u.Storage.SaveUrl(c.Context(), *req, username)
 	if err != nil {
+		if errors.Is(err, storage.ErrorMaxUrlCount) {
+			return fiber.NewError(http.StatusBadRequest, "user reached max url count")
+		}
 		log.Printf("cannot save url %s", err)
 		return fiber.ErrInternalServerError
 	}

@@ -2,7 +2,6 @@ package storage
 
 import (
 	"context"
-	"fmt"
 	"os"
 	"strconv"
 	"time"
@@ -52,7 +51,7 @@ func (p PostgresDB) SaveUrl(ctx context.Context, req request.Url, username strin
 		return model.Url{}, err
 	}
 	if user.UrlCount+1 > count {
-		return model.Url{}, fmt.Errorf("User reached max url count")
+		return model.Url{}, ErrorMaxUrlCount
 	}
 
 	url := model.Url{
