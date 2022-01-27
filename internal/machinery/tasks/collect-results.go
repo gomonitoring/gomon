@@ -1,6 +1,6 @@
 package tasks
 
-func CollectResults(results ...[]byte) error {
+func CollectResults(results ...string) error {
 	for _, data := range results {
 		result := CallUrlResult{}
 		decodeCallResult(data, result)

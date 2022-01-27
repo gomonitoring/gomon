@@ -1,6 +1,7 @@
 package tasks
 
 import (
+	"encoding/base64"
 	"encoding/json"
 )
 
@@ -12,7 +13,7 @@ type CallUrlResult struct {
 	Time       int64
 }
 
-func CallUrl(url string, id uint, threshhold int, resetTime int64) ([]byte, error) {
+func CallUrl(url string, id uint, threshhold int, resetTime int64) (string, error) {
 	statusCode := 200 // TODO implement sned request and return results
 	var time int64
 	time = 1
@@ -26,12 +27,17 @@ func CallUrl(url string, id uint, threshhold int, resetTime int64) ([]byte, erro
 	return encodeCallResult(result), nil
 }
 
-func encodeCallResult(result CallUrlResult) []byte {
+func encodeCallResult(result CallUrlResult) string {
 	reqJSON, _ := json.Marshal(result)
-	return reqJSON
+	return base64.StdEncoding.EncodeToString(reqJSON)
 }
 
-func decodeCallResult(data []byte, output interface{}) error {
-	error := json.Unmarshal(data, output)
-	return error
+func decodeCallResult(b64data string, output interface{}) error {
+	decodedstg, err := base64.StdEncoding.DecodeString(b64data)
+	if err != nil {
+		return err
+	}
+	data := []byte(decodedstg)
+	err = json.Unmarshal(data, output)
+	return err
 }
