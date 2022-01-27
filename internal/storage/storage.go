@@ -25,3 +25,7 @@ type Url interface {
 	GetUserUrls(context.Context, string) ([]model.Url, error)
 	GetUrlStats(context.Context, string, string) ([]model.Call, error)
 }
+
+type Alert interface {
+	GetAlerts(context.Context, string, string) ([]model.Alert, error)
+}

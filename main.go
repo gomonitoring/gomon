@@ -27,6 +27,10 @@ func main() {
 		Storage: storage.NewPostgresDBStorage(db),
 	}
 
+	ha := handler.Alert{
+		Storage: storage.NewPostgresDBStorage(db),
+	}
+
 	app := fiber.New()
 	userg := app.Group("/user")
 	hu.Register(userg)
@@ -37,6 +41,9 @@ func main() {
 
 	urlg := app.Group("/url")
 	hurl.Register(urlg)
+
+	alertg := app.Group("/alert")
+	ha.Register(alertg)
 
 	// read port from configmap, ":8080"
 	if err := app.Listen(":8080"); err != nil {

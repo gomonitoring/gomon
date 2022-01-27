@@ -92,7 +92,7 @@ func (p PostgresDB) GetUserUrls(ctx context.Context, username string) ([]model.U
 
 func (p PostgresDB) GetUrlStats(ctx context.Context, urlName string, username string) ([]model.Call, error) {
 	//test
-	call := fakeCalls()
+	call := mockCall()
 	p.db.Create(&call)
 	//
 	now := time.Now().Unix()
@@ -104,7 +104,19 @@ func (p PostgresDB) GetUrlStats(ctx context.Context, urlName string, username st
 	return calls, nil
 }
 
-func fakeCalls() []model.Call {
+func (p PostgresDB) GetAlerts(ctx context.Context, urlName string, username string) ([]model.Alert, error) {
+	//test
+	alert := mockAlert()
+	p.db.Create(&alert)
+	//
+	var alerts []model.Alert
+	p.db.Preload("Url").Preload("Url.User").Where("url_id = (?)", p.db.Table("urls").Select("id").
+		Where("user_id = (?) AND name = ?", p.db.Table("users").Select("id").
+			Where("username = ?", username), urlName)).Find(&alerts)
+	return alerts, nil
+}
+
+func mockCall() []model.Call {
 	now := time.Now().Unix()
 	calls := []model.Call{
 		{Time: now - 1, UrlID: 1},
@@ -113,4 +125,15 @@ func fakeCalls() []model.Call {
 		{Time: 300000000, UrlID: 1},
 	}
 	return calls
+}
+
+func mockAlert() []model.Alert {
+	now := time.Now().Unix()
+	alerts := []model.Alert{
+		{Time: now - 1, UrlID: 1},
+		{Time: now - 2, UrlID: 1},
+		{Time: now - 3, UrlID: 1},
+		{Time: 300000000, UrlID: 1},
+	}
+	return alerts
 }
