@@ -10,7 +10,6 @@ import (
 	"github.com/gofiber/fiber/v2"
 	"github.com/golang-jwt/jwt/v4"
 	"github.com/gomonitoring/http-server/internal/http/request"
-	"github.com/gomonitoring/http-server/internal/model"
 	"github.com/gomonitoring/http-server/internal/storage"
 )
 
@@ -33,12 +32,8 @@ func (u User) SignUp(c *fiber.Ctx) error {
 		return fiber.ErrBadRequest
 	}
 
-	user := model.User{
-		Username: req.Username,
-		Password: req.Password,
-	}
-
-	if err := u.Storage.Save(c.Context(), user); err != nil {
+	user, err := u.Storage.SaveUser(c.Context(), *req)
+	if err != nil {
 		if errors.Is(err, storage.ErrorUserDuplicate) {
 			return fiber.NewError(http.StatusBadRequest, "user already exists")
 		}

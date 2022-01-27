@@ -2,7 +2,8 @@ version: "3.7"
 
 services:
   db:
-    image: m.docker-registry.ir/postgres:10.10
+    #image: m.docker-registry.ir/postgres:10.10
+    image: postgres:10.10
     volumes:
       - local_db_data:/var/lib/postgresql/data
     environment:
@@ -25,6 +26,7 @@ services:
       DB_PASS: postgres-pass
       MACHINERY_BROKER: "redis://task_broker:6379"
       MACHINERY_RESULTS_BACKEND: "redis://task_broker:6379"
+      MAX_URL_COUNT: 20
       JWT_SECRET: secret
 
     ports:
