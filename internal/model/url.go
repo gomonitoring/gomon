@@ -9,6 +9,7 @@ type Url struct {
 	Name      string
 	Url       string
 	Threshold string
-	Username  string
+	User      User
+	UserID    uint
 	ResetTime int
 }

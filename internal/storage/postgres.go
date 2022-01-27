@@ -72,7 +72,7 @@ func (p PostgresDB) SaveUrl(ctx context.Context, req request.Url, username strin
 		Name:      req.Name,
 		Url:       req.Url,
 		Threshold: req.Threshold,
-		Username:  username,
+		User:      user,
 		ResetTime: int(time.Now().Unix()),
 	}
 	er := p.db.Create(&url).Error
