@@ -8,6 +8,7 @@ import (
 
 	"github.com/gomonitoring/http-server/internal/http/request"
 	"github.com/gomonitoring/http-server/internal/model"
+	"github.com/gomonitoring/http-server/internal/utils"
 	"gorm.io/gorm"
 )
 
@@ -22,12 +23,16 @@ func NewPostgresDBStorage(db *gorm.DB) PostgresDB {
 }
 
 func (p PostgresDB) SaveUser(ctx context.Context, req request.User) (model.User, error) {
+	hashedPass, err := utils.GetSha256(req.Password)
+	if err != nil {
+		return model.User{}, err
+	}
 	u := model.User{
 		Username: req.Username,
-		Password: req.Password,
+		Password: hashedPass,
 	}
-	err := p.db.Create(&u).Error
-	if err != nil {
+	er := p.db.Create(&u).Error
+	if er != nil {
 		return model.User{}, ErrorUserDuplicate
 	}
 
@@ -35,9 +40,14 @@ func (p PostgresDB) SaveUser(ctx context.Context, req request.User) (model.User,
 }
 
 func (p PostgresDB) LoadByUserPass(ctx context.Context, username string, password string) (model.User, error) {
+	hashedPass, err := utils.GetSha256(password)
+	if err != nil {
+		return model.User{}, err
+	}
+
 	var user model.User
 
-	p.db.Find(&user, "username = ? AND password = ?", username, password)
+	p.db.Find(&user, "username = ? AND password = ?", username, hashedPass)
 
 	if user.Username == "" {
 		return model.User{}, ErrorUserNotFound
