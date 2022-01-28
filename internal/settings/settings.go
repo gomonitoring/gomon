@@ -10,6 +10,8 @@ var MachineryBroker = getStrEnv("MACHINERY_BROKER", "redis://localhost:6379")
 var MachineryResultBackend = getStrEnv("MACHINERY_RESULTS_BACKEND", "redis://localhost:6379")
 var LocalWorkerConcurrency = getIntEnv("LOCAL_WORKER_CONCURRENCY", 1)
 var MonitoringWorkerConcurrency = getIntEnv("MONITORING_SERVER_CONCURRENCY", 10)
+var RedisHost = getStrEnv("REDIS_HOST", "redis://localhost:6379")
+var RedisPassword = getStrEnv("REDIS_PASSWORD", "")
 
 func getStrEnv(key string, def string) string {
 	val := os.Getenv(key)
