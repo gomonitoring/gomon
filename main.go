@@ -7,7 +7,7 @@ import (
 	jwtware "github.com/gofiber/jwt/v3"
 	"github.com/gomonitoring/http-server/internal/database"
 	"github.com/gomonitoring/http-server/internal/http/handler"
-	"github.com/gomonitoring/http-server/internal/machinery/server"
+	"github.com/gomonitoring/http-server/internal/machinery/tasks"
 	"github.com/gomonitoring/http-server/internal/machinery/worker"
 	"github.com/gomonitoring/http-server/internal/storage"
 
@@ -23,7 +23,7 @@ var (
 
 func init() {
 	app = cli.NewApp()
-	taskserver = server.GetMachineryServer()
+	taskserver = tasks.GetMachineryServer()
 }
 
 func main() {
