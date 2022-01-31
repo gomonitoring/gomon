@@ -20,6 +20,8 @@ RUN go build -o main .
 
 FROM alpine
 # Copy the source from the current directory to the Working Directory inside the container
-COPY --from=builder /app/main /app/docker-entrypoint.sh .
+COPY --from=builder /app/main /app/docker-entrypoint.sh ./
+
+RUN apk add bash
 
 ENTRYPOINT ["bash", "docker-entrypoint.sh"]
