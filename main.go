@@ -68,10 +68,6 @@ func main() {
 				if err := app.Listen(":8080"); err != nil {
 					log.Println("cannot start the server")
 				}
-				// read port from configmap, ":8080"
-				if err := app.Listen(":8080"); err != nil {
-					log.Println("cannot start the server")
-				}
 			},
 		}, {
 			Name:  "local_worker",

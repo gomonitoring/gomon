@@ -8,6 +8,7 @@ import (
 
 	"github.com/gomonitoring/http-server/internal/http/request"
 	"github.com/gomonitoring/http-server/internal/model"
+	"github.com/gomonitoring/http-server/internal/settings"
 	"github.com/gomonitoring/http-server/internal/utils"
 	"gorm.io/gorm"
 )
@@ -68,12 +69,17 @@ func (p PostgresDB) SaveUrl(ctx context.Context, req request.Url, username strin
 		return model.Url{}, ErrorMaxUrlCount
 	}
 
+	resetTime, e := time.ParseDuration(settings.DefaultResetTime)
+	if e != nil {
+		return model.Url{}, e
+	}
+
 	url := model.Url{
 		Name:      req.Name,
 		Url:       req.Url,
 		Threshold: req.Threshold,
 		User:      user,
-		ResetTime: time.Now().Unix(),
+		ResetTime: resetTime.Nanoseconds(),
 	}
 	er := p.db.Create(&url).Error
 	if er != nil {
