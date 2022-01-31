@@ -18,8 +18,8 @@ RUN go mod download
 COPY . .
 RUN go build -o main .
 
-FROM alpine:3.11.3
+FROM alpine
 # Copy the source from the current directory to the Working Directory inside the container
-COPY --from=builder . .
+COPY --from=builder /app/main /app/docker-entrypoint.sh .
 
 ENTRYPOINT ["bash", "docker-entrypoint.sh"]
