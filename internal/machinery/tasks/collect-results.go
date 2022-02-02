@@ -14,7 +14,7 @@ import (
 
 func CollectResults(results ...string) error {
 	db, _ := database.NewDB()
-	var calls []model.Call
+	calls := make([]model.Call, len(results))
 	for i, data := range results {
 		result := CallUrlResult{}
 		decodeCallResult(data, result)
@@ -38,7 +38,7 @@ func handleFaliure(id uint, threshhold int, ts int64, resetTime int64, statusCod
 		Password: settings.RedisPassword,
 		DB:       0,
 	})
-	url_key := strconv.FormatUint(uint64(id), 64)
+	url_key := strconv.FormatUint(uint64(id), 10)
 	if countKeysWithPrefix(redisClient, url_key+"_") >= threshhold {
 		iter := redisClient.Scan(0, url_key+"_*", 0).Iterator()
 		for iter.Next() {
