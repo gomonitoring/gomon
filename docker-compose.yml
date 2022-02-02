@@ -2,8 +2,7 @@ version: "3.7"
 
 services:
   db:
-    #image: m.docker-registry.ir/postgres:10.10
-    image: postgres:10.10
+    image: m.docker-registry.ir/postgres:10.10
     volumes:
       - local_db_data:/var/lib/postgresql/data
     environment:
