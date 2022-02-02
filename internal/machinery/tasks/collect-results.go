@@ -17,7 +17,7 @@ func CollectResults(results ...string) error {
 	calls := make([]model.Call, len(results))
 	for i, data := range results {
 		result := CallUrlResult{}
-		decodeCallResult(data, result)
+		decodeCallResult(data, &result)
 		calls[i] = model.Call{
 			Time:       result.Time,
 			StatusCode: result.StatusCode,
@@ -38,7 +38,8 @@ func handleFaliure(id uint, threshhold int, ts int64, resetTime int64, statusCod
 		Password: settings.RedisPassword,
 		DB:       0,
 	})
-	url_key := strconv.FormatUint(uint64(id), 10)
+	prefix_base := 36
+	url_key := strconv.FormatUint(uint64(id), prefix_base)
 	if countKeysWithPrefix(redisClient, url_key+"_") >= threshhold {
 		iter := redisClient.Scan(0, url_key+"_*", 0).Iterator()
 		for iter.Next() {
@@ -62,7 +63,7 @@ func handleFaliure(id uint, threshhold int, ts int64, resetTime int64, statusCod
 			log.Fatal("Could not push tasks to queue.")
 		}
 	} else {
-		event_key := url_key + "_" + strconv.FormatInt(ts, 64)
+		event_key := url_key + "_" + strconv.FormatInt(ts, prefix_base)
 		redisClient.Set(event_key, statusCode, time.Duration(resetTime))
 	}
 }
