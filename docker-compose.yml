@@ -38,7 +38,6 @@ services:
       DB_PASS: postgres-pass
       MACHINERY_BROKER: "redis://task_broker:6379"
       MACHINERY_RESULTS_BACKEND: "redis://task_broker:6379"
-      REDIS_HOST: "redis://redis:6379"
       MAX_URL_COUNT: 20
       JWT_SECRET: secret
       FUNC: server
@@ -62,8 +61,6 @@ services:
       MACHINERY_BROKER: "redis://task_broker:6379"
       MACHINERY_RESULTS_BACKEND: "redis://task_broker:6379"
       REDIS_HOST: "redis:6379"
-      MAX_URL_COUNT: 20
-      JWT_SECRET: secret
       FUNC: local_worker
     depends_on:
       - db
@@ -75,16 +72,8 @@ services:
       context: .
       dockerfile: Dockerfile
     environment:
-      DB_HOST: db
-      DB_PORT: 5432
-      DB_NAME: postgres-db
-      DB_USER: postgres-user
-      DB_PASS: postgres-pass
       MACHINERY_BROKER: "redis://task_broker:6379"
       MACHINERY_RESULTS_BACKEND: "redis://task_broker:6379"
-      REDIS_HOST: "redis:6379"
-      MAX_URL_COUNT: 20
-      JWT_SECRET: secret
       FUNC: monitoring_worker
     depends_on:
       - db
