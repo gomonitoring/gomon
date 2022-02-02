@@ -28,6 +28,6 @@ func registerPeriodicTasks(taskserver *machinery.Server) error {
 		Name:       "find_urls_to_call",
 		RoutingKey: "local",
 	}
-	err := taskserver.RegisterPeriodicTask("* * * * *", "find_urls_to_call", signature)
+	err := taskserver.RegisterPeriodicTask(settings.CallUrlsSchedule, "find_urls_to_call", signature)
 	return err
 }
