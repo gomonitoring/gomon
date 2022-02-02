@@ -6,6 +6,8 @@ import (
 	"strconv"
 )
 
+var DefaultResetTime = getStrEnv("DEFAUTL_RESET_TIME", "5m")
+
 var MachineryBroker = getStrEnv("MACHINERY_BROKER", "redis://localhost:6379")
 var MachineryResultBackend = getStrEnv("MACHINERY_RESULTS_BACKEND", "redis://localhost:6379")
 var LocalWorkerConcurrency = getIntEnv("LOCAL_WORKER_CONCURRENCY", 1)
