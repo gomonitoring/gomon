@@ -11,6 +11,15 @@ services:
       POSTGRES_PASSWORD: postgres-pass
       POSTGRES_DB: postgres-db
 
+  db_admin:
+    image: sosedoff/pgweb:latest
+    environment:
+      DATABASE_URL: postgres://postgres-user:postgres-pass@db:5432/postgres-db?sslmode=disable
+    ports:
+      - "8080:8081"
+    depends_on:
+      - db
+
   task_broker:
     image: redis
   
@@ -66,8 +75,14 @@ services:
       context: .
       dockerfile: Dockerfile
     environment:
+      DB_HOST: db
+      DB_PORT: 5432
+      DB_NAME: postgres-db
+      DB_USER: postgres-user
+      DB_PASS: postgres-pass
       MACHINERY_BROKER: "redis://task_broker:6379"
       MACHINERY_RESULTS_BACKEND: "redis://task_broker:6379"
+      REDIS_HOST: "redis://redis:6379"
       MAX_URL_COUNT: 20
       JWT_SECRET: secret
       FUNC: monitoring_worker
