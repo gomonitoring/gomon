@@ -2,6 +2,7 @@ package tasks
 
 import (
 	"log"
+	"strconv"
 
 	"github.com/RichardKnop/machinery/v1/tasks"
 	"github.com/gomonitoring/http-server/internal/database"
@@ -14,6 +15,7 @@ func FindUrlsToCall() error {
 	query := db.Find(&urls)
 	groupSigs := make([]*tasks.Signature, query.RowsAffected)
 	for i, url := range urls {
+		threshhold, _ := strconv.Atoi(url.Threshold)
 		sig := tasks.Signature{
 			Name:       "call_url",
 			RoutingKey: "monitoring",
@@ -29,7 +31,7 @@ func FindUrlsToCall() error {
 				}, {
 					Name:  "threshhold",
 					Type:  "int",
-					Value: url.Threshold,
+					Value: threshhold,
 				}, {
 					Name:  "resetTime",
 					Type:  "int64",
