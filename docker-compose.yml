@@ -61,7 +61,7 @@ services:
       DB_PASS: postgres-pass
       MACHINERY_BROKER: "redis://task_broker:6379"
       MACHINERY_RESULTS_BACKEND: "redis://task_broker:6379"
-      REDIS_HOST: "redis://redis:6379"
+      REDIS_HOST: "redis:6379"
       MAX_URL_COUNT: 20
       JWT_SECRET: secret
       FUNC: local_worker
@@ -82,7 +82,7 @@ services:
       DB_PASS: postgres-pass
       MACHINERY_BROKER: "redis://task_broker:6379"
       MACHINERY_RESULTS_BACKEND: "redis://task_broker:6379"
-      REDIS_HOST: "redis://redis:6379"
+      REDIS_HOST: "redis:6379"
       MAX_URL_COUNT: 20
       JWT_SECRET: secret
       FUNC: monitoring_worker
