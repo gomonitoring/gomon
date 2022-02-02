@@ -3,7 +3,6 @@ package tasks
 import (
 	"encoding/base64"
 	"encoding/json"
-	"log"
 	"net/http"
 	"time"
 )
@@ -20,7 +19,6 @@ func CallUrl(url string, id uint, threshhold int, resetTime int64) (string, erro
 	var statusCode int
 	resp, err := http.Get(url)
 	if err != nil {
-		log.Print(err.Error())
 		statusCode = -1
 	} else {
 		statusCode = resp.StatusCode
