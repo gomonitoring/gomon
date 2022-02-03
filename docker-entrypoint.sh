@@ -7,4 +7,4 @@ then
     while ! nc -z ${DB_HOST} ${DB_PORT}; do sleep 2; done
     echo "CONNECTED DATABASE ..."   
 fi
-go run ./main.go $FUNC
+./main $FUNC
