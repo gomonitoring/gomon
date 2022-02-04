@@ -1,0 +1,204 @@
+{
+	"info": {
+		"_postman_id": "6436f7a5-10af-4511-9ddf-1388920a8758",
+		"name": "GoMon",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "signup",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"username\": \"test1\",\n    \"password\": \"12345678\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{BASE_URL}}/user/signup",
+					"host": [
+						"{{BASE_URL}}"
+					],
+					"path": [
+						"user",
+						"signup"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "login",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"username\": \"test1\",\n    \"password\": \"12345678\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{BASE_URL}}/user/login",
+					"host": [
+						"{{BASE_URL}}"
+					],
+					"path": [
+						"user",
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "register url",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"name\": \"google\",\n    \"url\": \"https://google.com\",\n    \"threshold\": \"5\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{BASE_URL}}/url/register-url",
+					"host": [
+						"{{BASE_URL}}"
+					],
+					"path": [
+						"url",
+						"register-url"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get urls",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{BASE_URL}}/url/urls",
+					"host": [
+						"{{BASE_URL}}"
+					],
+					"path": [
+						"url",
+						"urls"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get stats",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"name\": \"google\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{BASE_URL}}/url/stats",
+					"host": [
+						"{{BASE_URL}}"
+					],
+					"path": [
+						"url",
+						"stats"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get alerts",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"urlname\": \"google\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{BASE_URL}}/alert/alerts",
+					"host": [
+						"{{BASE_URL}}"
+					],
+					"path": [
+						"alert",
+						"alerts"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"auth": {
+		"type": "bearer",
+		"bearer": [
+			{
+				"key": "token",
+				"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2NDQxNTU1MDQsInVzZXJuYW1lIjoidGVzdDEifQ.t4eCOtBpJ4_RcLMThIJy7BfpqFvj9LCb-2hIWR8Zl6I",
+				"type": "string"
+			}
+		]
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "BASE_URL",
+			"value": "localhost:8010",
+			"type": "default"
+		},
+		{
+			"key": "LOCAL",
+			"value": "localhost:8010",
+			"type": "default"
+		}
+	]
+}
