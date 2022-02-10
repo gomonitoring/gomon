@@ -23,7 +23,7 @@ Clients can interact with the service through a REST http api. The api currently
 - Get number of failed and successful calls for specific url
 - Get alerts for specific url
 
-For more details on the exact endpoints please refer to the provided postman collection.
+For more details on the exact endpoints please refer to the endpoints dir.
 
 ---
 ### Deployment
