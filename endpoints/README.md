@@ -1,6 +1,6 @@
 Signup:
 ```bash
-curl --location --request POST 'gomon.glss.ir/user/signup' \
+curl --location --request POST 'localhost:8010/user/signup' \
 --header 'Content-Type: application/json' \
 --data-raw '{
     "username": "test3",
@@ -12,7 +12,7 @@ curl --location --request POST 'gomon.glss.ir/user/signup' \
 
 Login:
 ```bash
-curl --location --request POST 'gomon.glss.ir/user/login' \
+curl --location --request POST 'localhost:8010/user/login' \
 --header 'Content-Type: application/json' \
 --data-raw '{
     "username": "test3",
@@ -24,7 +24,7 @@ curl --location --request POST 'gomon.glss.ir/user/login' \
 
 Register URL:
 ```bash
-curl --location --request POST 'gomon.glss.ir/url/register-url' \
+curl --location --request POST 'localhost:8010/url/register-url' \
 --header 'Authorization: Bearer jwt token' \
 --header 'Content-Type: application/json' \
 --data-raw '{
@@ -38,7 +38,7 @@ curl --location --request POST 'gomon.glss.ir/url/register-url' \
 
 Get URLs:
 ```bash
-curl --location --request GET 'gomon.glss.ir/url/urls' \
+curl --location --request GET 'localhost:8010/url/urls' \
 --header 'Authorization: Bearer jwt token'
 ```
 
@@ -46,7 +46,7 @@ curl --location --request GET 'gomon.glss.ir/url/urls' \
 
 Statistics:
 ```bash
-curl --location --request POST 'gomon.glss.ir/url/stats' \
+curl --location --request POST 'localhost:8010/url/stats' \
 --header 'Authorization: Bearer jwt token' \
 --header 'Content-Type: application/json' \
 --data-raw '{
@@ -58,7 +58,7 @@ curl --location --request POST 'gomon.glss.ir/url/stats' \
 
 Alerts:
 ```bash
-curl --location --request POST 'gomon.glss.ir/alert/alerts' \
+curl --location --request POST 'localhost:8010/alert/alerts' \
 --header 'Authorization: Bearer jwt token' \
 --header 'Content-Type: application/json' \
 --data-raw '{

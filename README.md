@@ -7,7 +7,7 @@ You can also query the service for the number of successful and failed calls in 
 ## Quick start:
 To run the service in a test environment you can simply use the provided docker compose file:
 ```bash
-cd http-server  # pwd -> <proj-repo>/http-server/
+cd gomon  # pwd -> <proj-repo>/gomon/
 docker-compose up -d
 ```
 *Warning: this compose file might not be suitable for use in production environments and should only be used for testing purposes*
@@ -21,6 +21,7 @@ Clients can interact with the service through a REST http api. The api currently
 - Register url to be monitored
 - List registered urls
 - Get number of failed and successful calls for specific url
+- Get alerts for specific url
 
 For more details on the exact endpoints please refer to the provided postman collection.
 
