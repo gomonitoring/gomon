@@ -2,8 +2,6 @@ package storage
 
 import (
 	"context"
-	"os"
-	"strconv"
 	"time"
 
 	"github.com/gomonitoring/http-server/internal/http/request"
@@ -60,12 +58,8 @@ func (p PostgresDB) LoadByUserPass(ctx context.Context, username string, passwor
 func (p PostgresDB) SaveUrl(ctx context.Context, req request.Url, username string) (model.Url, error) {
 	var user model.User
 	p.db.Where("username = ?", username).Find(&user)
-	maxUserUrlCount := os.Getenv("MAX_URL_COUNT")
-	count, err := strconv.Atoi(maxUserUrlCount)
-	if err != nil {
-		return model.Url{}, err
-	}
-	if user.UrlCount+1 > count {
+	maxUrl := settings.MaxUrlPerUser
+	if user.UrlCount+1 > maxUrl {
 		return model.Url{}, ErrorMaxUrlCount
 	}
 
@@ -83,7 +77,7 @@ func (p PostgresDB) SaveUrl(ctx context.Context, req request.Url, username strin
 	}
 	er := p.db.Create(&url).Error
 	if er != nil {
-		return model.Url{}, err
+		return model.Url{}, er
 	}
 	user.UrlCount += 1
 	p.db.Save(&user)

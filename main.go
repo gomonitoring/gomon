@@ -9,6 +9,7 @@ import (
 	"github.com/gomonitoring/http-server/internal/http/handler"
 	"github.com/gomonitoring/http-server/internal/machinery/tasks"
 	"github.com/gomonitoring/http-server/internal/machinery/worker"
+	"github.com/gomonitoring/http-server/internal/settings"
 	"github.com/gomonitoring/http-server/internal/storage"
 
 	"github.com/RichardKnop/machinery/v1"
@@ -55,7 +56,7 @@ func main() {
 				hu.Register(userg)
 				// read secret from configmap
 				app.Use(jwtware.New(jwtware.Config{
-					SigningKey: []byte(os.Getenv("JWT_SECRET")),
+					SigningKey: []byte(settings.JWTSecret),
 				}))
 
 				urlg := app.Group("/url")
