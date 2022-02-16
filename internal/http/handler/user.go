@@ -4,12 +4,12 @@ import (
 	"errors"
 	"log"
 	"net/http"
-	"os"
 	"time"
 
 	"github.com/gofiber/fiber/v2"
 	"github.com/golang-jwt/jwt/v4"
 	"github.com/gomonitoring/http-server/internal/http/request"
+	"github.com/gomonitoring/http-server/internal/settings"
 	"github.com/gomonitoring/http-server/internal/storage"
 )
 
@@ -80,7 +80,7 @@ func (u User) Login(c *fiber.Ctx) error {
 	token := jwt.NewWithClaims(jwt.SigningMethodHS256, claims)
 
 	// read the secret from configmap
-	t, err := token.SignedString([]byte(os.Getenv("JWT_SECRET")))
+	t, err := token.SignedString([]byte(settings.JWTSecret))
 	if err != nil {
 		return c.SendStatus(fiber.StatusInternalServerError)
 	}

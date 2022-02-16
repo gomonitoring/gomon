@@ -6,6 +6,16 @@ import (
 	"strconv"
 )
 
+var DBHost = getStrEnv("DB_HOST", "")
+var DBPort = getStrEnv("DB_PORT", "")
+var DBUser = getStrEnv("DB_USER", "")
+var DBPass = getStrEnv("DB_PASS", "")
+var DBName = getStrEnv("DB_NAME", "")
+
+var JWTSecret = getStrEnv("JWT_SECRET", "secret")
+
+var MaxUrlPerUser = getIntEnv("MAX_URL_COUNT", 10)
+
 var DefaultResetTime = getStrEnv("DEFAUTL_RESET_TIME", "5m")
 
 var MachineryBroker = getStrEnv("MACHINERY_BROKER", "redis://localhost:6379")
