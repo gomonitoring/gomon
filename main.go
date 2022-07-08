@@ -1,8 +1,9 @@
 package main
 
 import (
-	"log"
 	"os"
+
+	log "github.com/sirupsen/logrus"
 
 	jwtware "github.com/gofiber/jwt/v3"
 	"github.com/gomonitoring/http-server/internal/database"

@@ -5,11 +5,11 @@ go 1.17
 require (
 	github.com/andybalholm/brotli v1.0.4 // indirect
 	github.com/asaskevich/govalidator v0.0.0-20200108200545-475eaeb16496 // indirect
-	github.com/go-ozzo/ozzo-validation v3.6.0+incompatible // indirect
-	github.com/go-ozzo/ozzo-validation/v4 v4.3.0 // indirect
-	github.com/gofiber/fiber/v2 v2.25.0 // indirect
-	github.com/gofiber/jwt/v3 v3.2.3 // indirect
-	github.com/golang-jwt/jwt/v4 v4.2.0 // indirect
+	github.com/go-ozzo/ozzo-validation v3.6.0+incompatible
+	github.com/go-ozzo/ozzo-validation/v4 v4.3.0
+	github.com/gofiber/fiber/v2 v2.25.0
+	github.com/gofiber/jwt/v3 v3.2.3
+	github.com/golang-jwt/jwt/v4 v4.2.0
 	github.com/jinzhu/inflection v1.0.0 // indirect
 	github.com/jinzhu/now v1.1.4 // indirect
 	github.com/klauspost/compress v1.14.1 // indirect
@@ -18,14 +18,14 @@ require (
 	github.com/valyala/tcplisten v1.0.0 // indirect
 	golang.org/x/sys v0.0.0-20220114195835-da31bd327af9 // indirect
 	gorm.io/driver/postgres v1.2.3
-	gorm.io/gorm v1.22.5 // indirect
+	gorm.io/gorm v1.22.5
 )
 
 require (
 	cloud.google.com/go v0.76.0 // indirect
 	cloud.google.com/go/pubsub v1.10.0 // indirect
 	github.com/RichardKnop/logging v0.0.0-20190827224416-1a693bdd4fae // indirect
-	github.com/RichardKnop/machinery v1.10.6 // indirect
+	github.com/RichardKnop/machinery v1.10.6
 	github.com/aws/aws-sdk-go v1.37.16 // indirect
 	github.com/bradfitz/gomemcache v0.0.0-20190913173617-a41fca850d0b // indirect
 	github.com/cespare/xxhash/v2 v2.1.1 // indirect
@@ -59,8 +59,9 @@ require (
 	github.com/pkg/errors v0.9.1 // indirect
 	github.com/robfig/cron/v3 v3.0.1 // indirect
 	github.com/russross/blackfriday/v2 v2.1.0 // indirect
+	github.com/sirupsen/logrus v1.8.1
 	github.com/streadway/amqp v1.0.0 // indirect
-	github.com/urfave/cli v1.22.5 // indirect
+	github.com/urfave/cli v1.22.5
 	github.com/xdg/scram v0.0.0-20180814205039-7eeb5667e42c // indirect
 	github.com/xdg/stringprep v1.0.0 // indirect
 	go.mongodb.org/mongo-driver v1.4.6 // indirect
