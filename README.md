@@ -32,7 +32,7 @@ This service is comprised of:
 - a relational database (currently postgres is used)
 - two worker servers:
     - local worker, responsible for i/o between the database and task queue, and the alerting logic
-    - monitoring database, responsible for sending the http request to monitored urls
+    - monitoring worker, responsible for sending the http request to monitored urls
 - a redis cache for local worker
 - a machinery task queue and results backend (current default is redis)
 

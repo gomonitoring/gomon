@@ -10,7 +10,6 @@ import (
 )
 
 func NewDB() (*gorm.DB, error) {
-	// Connection URL to connect to Postgres Database, read from configmap
 	dsn := fmt.Sprintf("host=%s port=%s user=%s password=%s dbname=%s sslmode=disable",
 		settings.DBHost,
 		settings.DBPort,

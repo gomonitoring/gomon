@@ -1,8 +1,9 @@
 package tasks
 
 import (
-	"log"
 	"strconv"
+
+	log "github.com/sirupsen/logrus"
 
 	"github.com/RichardKnop/machinery/v1/tasks"
 	"github.com/gomonitoring/http-server/internal/database"
@@ -49,7 +50,8 @@ func FindUrlsToCall() error {
 	chord, _ := tasks.NewChord(group, &collectorSig)
 	_, err := GetMachineryServer().SendChord(chord, 0)
 	if err != nil {
-		log.Fatal("Could not push tasks to queue.")
+		log.Fatal("Could not push call_url tasks to queue.")
 	}
+	log.Infoln("pushed call_url tasks to queue.")
 	return nil
 }

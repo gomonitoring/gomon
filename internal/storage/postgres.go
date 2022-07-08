@@ -107,25 +107,3 @@ func (p PostgresDB) GetAlerts(ctx context.Context, urlName string, username stri
 			Where("username = ?", username), urlName)).Find(&alerts)
 	return alerts, nil
 }
-
-func mockCall() []model.Call {
-	now := time.Now().Unix()
-	calls := []model.Call{
-		{Time: now - 1, UrlID: 1},
-		{Time: now - 2, UrlID: 1},
-		{Time: now - 3, UrlID: 1},
-		{Time: 300000000, UrlID: 1},
-	}
-	return calls
-}
-
-func mockAlert() []model.Alert {
-	now := time.Now().Unix()
-	alerts := []model.Alert{
-		{Time: now - 1, UrlID: 1},
-		{Time: now - 2, UrlID: 1},
-		{Time: now - 3, UrlID: 1},
-		{Time: 300000000, UrlID: 1},
-	}
-	return alerts
-}
