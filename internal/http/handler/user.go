@@ -2,9 +2,10 @@ package handler
 
 import (
 	"errors"
-	"log"
 	"net/http"
 	"time"
+
+	log "github.com/sirupsen/logrus"
 
 	"github.com/gofiber/fiber/v2"
 	"github.com/golang-jwt/jwt/v4"
@@ -21,13 +22,13 @@ func (u User) SignUp(c *fiber.Ctx) error {
 	req := new(request.User)
 
 	if err := c.BodyParser(req); err != nil {
-		log.Printf("cannot load user data %s", err)
+		log.Infoln("cannot load user data %s", err)
 
 		return fiber.ErrBadRequest
 	}
 
 	if err := req.Validate(); err != nil {
-		log.Printf("cannot validate user data %s", err)
+		log.Infoln("cannot validate user data %s", err)
 
 		return fiber.ErrBadRequest
 	}
@@ -38,7 +39,7 @@ func (u User) SignUp(c *fiber.Ctx) error {
 			return fiber.NewError(http.StatusBadRequest, "user already exists")
 		}
 
-		log.Printf("cannot save user %s", err)
+		log.Infoln("cannot save user %s", err)
 
 		return fiber.ErrInternalServerError
 	}
@@ -50,13 +51,13 @@ func (u User) Login(c *fiber.Ctx) error {
 	req := new(request.User)
 
 	if err := c.BodyParser(req); err != nil {
-		log.Printf("cannot load user data %s", err)
+		log.Infoln("cannot load user data %s", err)
 
 		return fiber.ErrBadRequest
 	}
 
 	if err := req.Validate(); err != nil {
-		log.Printf("cannot validate user data %s", err)
+		log.Infoln("cannot validate user data %s", err)
 
 		return fiber.ErrBadRequest
 	}
@@ -67,21 +68,21 @@ func (u User) Login(c *fiber.Ctx) error {
 			return fiber.ErrNotFound
 		}
 
-		log.Printf("cannot load user %s", err)
+		log.Infoln("cannot load user %s", err)
 
 		return fiber.ErrInternalServerError
 	}
 
 	claims := jwt.MapClaims{
 		"username": user.Username,
-		"exp":      time.Now().Add(time.Hour * 72).Unix(), // read expire from configmap
+		"exp":      time.Now().Add(time.Hour * 72).Unix(),
 	}
 
 	token := jwt.NewWithClaims(jwt.SigningMethodHS256, claims)
 
-	// read the secret from configmap
 	t, err := token.SignedString([]byte(settings.JWTSecret))
 	if err != nil {
+		log.Errorln("can not generate jwt token %s", err)
 		return c.SendStatus(fiber.StatusInternalServerError)
 	}
 

@@ -55,7 +55,6 @@ func main() {
 				app := fiber.New()
 				userg := app.Group("/user")
 				hu.Register(userg)
-				// read secret from configmap
 				app.Use(jwtware.New(jwtware.Config{
 					SigningKey: []byte(settings.JWTSecret),
 				}))
@@ -66,9 +65,8 @@ func main() {
 				alertg := app.Group("/alert")
 				ha.Register(alertg)
 
-				// read port from configmap, ":8080"
 				if err := app.Listen(":8080"); err != nil {
-					log.Println("cannot start the server")
+					log.Infoln("cannot start the server")
 				}
 			},
 		}, {

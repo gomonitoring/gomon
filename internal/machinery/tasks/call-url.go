@@ -5,6 +5,8 @@ import (
 	"encoding/json"
 	"net/http"
 	"time"
+
+	log "github.com/sirupsen/logrus"
 )
 
 type CallUrlResult struct {
@@ -30,6 +32,7 @@ func CallUrl(url string, id uint, threshhold int, resetTime int64) (string, erro
 		ResetTime:  resetTime,
 		Time:       time.Now().Unix(),
 	}
+	log.Infoln("Call", url)
 	return encodeCallResult(result), nil
 }
 

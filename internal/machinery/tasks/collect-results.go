@@ -1,9 +1,10 @@
 package tasks
 
 import (
-	"log"
 	"strconv"
 	"time"
+
+	log "github.com/sirupsen/logrus"
 
 	"github.com/RichardKnop/machinery/v1/tasks"
 	"github.com/go-redis/redis"
@@ -28,7 +29,11 @@ func CollectResults(results ...string) error {
 			handleFaliure(result.Id, result.Threshhold, result.Time, result.ResetTime, result.StatusCode)
 		}
 	}
-	db.Create(&calls)
+	err := db.Create(&calls).Error
+	if err != nil {
+		log.Fatalln("Could not collect url call results %s", err)
+	}
+	log.Infoln("Url call results collected")
 	return nil
 }
 
@@ -60,7 +65,7 @@ func handleFaliure(id uint, threshhold int, ts int64, resetTime int64, statusCod
 		}
 		_, err := GetMachineryServer().SendTask(&sig)
 		if err != nil {
-			log.Fatal("Could not push tasks to queue.")
+			log.Fatal("Could not push create alert task to queue.")
 		}
 	} else {
 		event_key := url_key + "_" + strconv.FormatInt(ts, prefix_base)
