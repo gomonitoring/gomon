@@ -1,6 +1,5 @@
 version: "3.7"
 
-
 services:
     server:
       environment:
@@ -10,4 +9,3 @@ services:
     monitoring_worker:
       environment:
         MONITORING_SERVER_CONCURRENCY: 10
-
