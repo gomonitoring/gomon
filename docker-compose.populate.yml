@@ -1,0 +1,13 @@
+version: "3.7"
+
+
+services:
+    server:
+      environment:
+        MAX_URL_COUNT: 100
+        POPULATE_URL_COUNT: 100
+
+    monitoring_worker:
+      environment:
+        MONITORING_SERVER_CONCURRENCY: 10
+
