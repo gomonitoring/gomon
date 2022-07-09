@@ -10,6 +10,11 @@ To run the service in a test environment you can simply use the provided docker 
 cd gomon  # pwd -> <proj-repo>/gomon/
 docker-compose up -d
 ```
+To run with some predefined random urls, config the docker compose populate file and run:
+```bash
+cd gomon  # pwd -> <proj-repo>/gomon/
+docker-compose -f docker-compose.yml -f docker-compose.populate.yml up -d
+```
 *Warning: this compose file might not be suitable for use in production environments and should only be used for testing purposes*
 
 ---
