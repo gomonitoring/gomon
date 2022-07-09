@@ -6,16 +6,9 @@ import (
 	"net/http"
 	"time"
 
+	"github.com/gomonitoring/http-server/internal/model"
 	log "github.com/sirupsen/logrus"
 )
-
-type CallUrlResult struct {
-	Id         uint
-	StatusCode int
-	Threshhold int
-	ResetTime  int64
-	Time       int64
-}
 
 func CallUrl(url string, id uint, threshhold int, resetTime int64) (string, error) {
 	var statusCode int
@@ -25,18 +18,18 @@ func CallUrl(url string, id uint, threshhold int, resetTime int64) (string, erro
 	} else {
 		statusCode = resp.StatusCode
 	}
-	result := CallUrlResult{
+	result := model.CallUrlResult{
 		Id:         id,
 		StatusCode: statusCode,
 		Threshhold: threshhold,
 		ResetTime:  resetTime,
 		Time:       time.Now().Unix(),
 	}
-	log.Infoln("Call", url)
-	return encodeCallResult(result), nil
+	log.Infoln("call", url)
+	return encodeCallResult(&result), nil
 }
 
-func encodeCallResult(result CallUrlResult) string {
+func encodeCallResult(result *model.CallUrlResult) string {
 	resJSON, _ := json.Marshal(result)
 	return base64.StdEncoding.EncodeToString(resJSON)
 }

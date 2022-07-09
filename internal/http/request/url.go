@@ -17,8 +17,8 @@ type Stats struct {
 	Name string `json:"name"`
 }
 
-func (u Url) Validate() error {
-	if err := validation.ValidateStruct(&u,
+func (u *Url) Validate() error {
+	if err := validation.ValidateStruct(u,
 		validation.Field(&u.Name, validation.Required, is.UTFLetterNumeric),
 		validation.Field(&u.Url, validation.Required, is.URL),
 		validation.Field(&u.Threshold, validation.Required, is.UTFNumeric),
@@ -29,8 +29,8 @@ func (u Url) Validate() error {
 	return nil
 }
 
-func (s Stats) Validate() error {
-	if err := validation.ValidateStruct(&s,
+func (s *Stats) Validate() error {
+	if err := validation.ValidateStruct(s,
 		validation.Field(&s.Name, validation.Required, is.UTFLetterNumeric),
 	); err != nil {
 		return fmt.Errorf("stats validation failed %w", err)

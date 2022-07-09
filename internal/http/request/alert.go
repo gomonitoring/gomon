@@ -11,8 +11,8 @@ type Alert struct {
 	UrlName string `json:"urlname"`
 }
 
-func (a Alert) Validate() error {
-	if err := validation.ValidateStruct(&a,
+func (a *Alert) Validate() error {
+	if err := validation.ValidateStruct(a,
 		validation.Field(&a.UrlName, validation.Required, is.UTFLetterNumeric),
 	); err != nil {
 		return fmt.Errorf("alert validation failed %w", err)

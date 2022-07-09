@@ -8,32 +8,28 @@ import (
 
 	"github.com/RichardKnop/machinery/v1/tasks"
 	"github.com/go-redis/redis"
-	"github.com/gomonitoring/http-server/internal/database"
+	"github.com/gomonitoring/http-server/internal/machinery/worker"
 	"github.com/gomonitoring/http-server/internal/model"
 	"github.com/gomonitoring/http-server/internal/settings"
+	"github.com/gomonitoring/http-server/internal/storage"
 )
 
 func CollectResults(results ...string) error {
-	db, _ := database.NewDB()
-	calls := make([]model.Call, len(results))
+	calls := make([]model.CallUrlResult, len(results))
 	for i, data := range results {
-		result := CallUrlResult{}
+		result := model.CallUrlResult{}
 		decodeCallResult(data, &result)
-		calls[i] = model.Call{
-			Time:       result.Time,
-			StatusCode: result.StatusCode,
-			UrlID:      result.Id,
-			Successful: result.StatusCode < 300 && result.StatusCode > 199,
-		}
-		if result.StatusCode > 299 || result.StatusCode < 200 {
+		calls[i] = result
+		if result.StatusCode > 499 || result.StatusCode < 100 {
 			handleFaliure(result.Id, result.Threshhold, result.Time, result.ResetTime, result.StatusCode)
 		}
 	}
-	err := db.Create(&calls).Error
+	var st storage.LocalWorker = worker.GetLocalWorkerStorage()
+	err := st.SaveCallResults(calls)
 	if err != nil {
-		log.Fatalln("Could not collect url call results %s", err)
+		log.Fatalln("could not collect url call results", err)
 	}
-	log.Infoln("Url call results collected")
+	log.Infoln("url call results collected")
 	return nil
 }
 
@@ -65,7 +61,7 @@ func handleFaliure(id uint, threshhold int, ts int64, resetTime int64, statusCod
 		}
 		_, err := GetMachineryServer().SendTask(&sig)
 		if err != nil {
-			log.Fatal("Could not push create alert task to queue.")
+			log.Fatal("could not push create alert task to queue.")
 		}
 	} else {
 		event_key := url_key + "_" + strconv.FormatInt(ts, prefix_base)

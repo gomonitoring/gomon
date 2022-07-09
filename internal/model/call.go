@@ -10,3 +10,11 @@ type Call struct {
 	Url        Url
 	UrlID      uint
 }
+
+type CallUrlResult struct {
+	Id         uint
+	StatusCode int
+	Threshhold int
+	ResetTime  int64
+	Time       int64
+}

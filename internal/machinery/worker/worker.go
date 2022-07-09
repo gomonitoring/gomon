@@ -1,10 +1,16 @@
 package worker
 
 import (
+	log "github.com/sirupsen/logrus"
+
 	"github.com/RichardKnop/machinery/v1"
 	"github.com/RichardKnop/machinery/v1/tasks"
+	"github.com/gomonitoring/http-server/internal/database"
 	"github.com/gomonitoring/http-server/internal/settings"
+	"github.com/gomonitoring/http-server/internal/storage"
 )
+
+var postgresStorage storage.LocalWorker
 
 func StartMonitoringWorker(taskserver *machinery.Server) {
 	worker := taskserver.NewCustomQueueWorker("monitoring_worker", settings.MonitoringWorkerConcurrency, "monitoring")
@@ -30,4 +36,15 @@ func registerPeriodicTasks(taskserver *machinery.Server) error {
 	}
 	err := taskserver.RegisterPeriodicTask(settings.CallUrlsSchedule, "find_urls_to_call", signature)
 	return err
+}
+
+func GetLocalWorkerStorage() storage.LocalWorker {
+	if postgresStorage == nil {
+		db, err := database.NewDB()
+		if err != nil {
+			log.Fatalf("database connection failed", err)
+		}
+		postgresStorage = storage.NewPostgresDBStorage(db)
+	}
+	return postgresStorage
 }

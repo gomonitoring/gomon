@@ -18,28 +18,28 @@ type User struct {
 	Storage storage.User
 }
 
-func (u User) SignUp(c *fiber.Ctx) error {
+func (u *User) SignUp(c *fiber.Ctx) error {
 	req := new(request.User)
 
 	if err := c.BodyParser(req); err != nil {
-		log.Infoln("cannot load user data %s", err)
+		log.Infoln("cannot load user data ", err)
 
 		return fiber.ErrBadRequest
 	}
 
 	if err := req.Validate(); err != nil {
-		log.Infoln("cannot validate user data %s", err)
+		log.Infoln("cannot validate user data ", err)
 
 		return fiber.ErrBadRequest
 	}
 
-	user, err := u.Storage.SaveUser(c.Context(), *req)
+	user, err := u.Storage.SaveUser(c.Context(), req)
 	if err != nil {
 		if errors.Is(err, storage.ErrorUserDuplicate) {
 			return fiber.NewError(http.StatusBadRequest, "user already exists")
 		}
 
-		log.Infoln("cannot save user %s", err)
+		log.Infoln("cannot save user ", err)
 
 		return fiber.ErrInternalServerError
 	}
@@ -47,17 +47,17 @@ func (u User) SignUp(c *fiber.Ctx) error {
 	return c.Status(http.StatusCreated).JSON(user)
 }
 
-func (u User) Login(c *fiber.Ctx) error {
+func (u *User) Login(c *fiber.Ctx) error {
 	req := new(request.User)
 
 	if err := c.BodyParser(req); err != nil {
-		log.Infoln("cannot load user data %s", err)
+		log.Infoln("cannot load user data ", err)
 
 		return fiber.ErrBadRequest
 	}
 
 	if err := req.Validate(); err != nil {
-		log.Infoln("cannot validate user data %s", err)
+		log.Infoln("cannot validate user data ", err)
 
 		return fiber.ErrBadRequest
 	}
@@ -68,7 +68,7 @@ func (u User) Login(c *fiber.Ctx) error {
 			return fiber.ErrNotFound
 		}
 
-		log.Infoln("cannot load user %s", err)
+		log.Infoln("cannot load user ", err)
 
 		return fiber.ErrInternalServerError
 	}
@@ -82,14 +82,14 @@ func (u User) Login(c *fiber.Ctx) error {
 
 	t, err := token.SignedString([]byte(settings.JWTSecret))
 	if err != nil {
-		log.Errorln("can not generate jwt token %s", err)
+		log.Errorln("can not generate jwt token ", err)
 		return c.SendStatus(fiber.StatusInternalServerError)
 	}
 
 	return c.Status(http.StatusOK).JSON(fiber.Map{"token": t})
 }
 
-func (u User) Register(g fiber.Router) {
+func (u *User) Register(g fiber.Router) {
 	g.Post("/login", u.Login)
 	g.Post("/signup", u.SignUp)
 }

@@ -19,8 +19,8 @@ type User struct {
 	Password string `json:"password"`
 }
 
-func (u User) Validate() error {
-	if err := validation.ValidateStruct(&u,
+func (u *User) Validate() error {
+	if err := validation.ValidateStruct(u,
 		validation.Field(&u.Username, validation.Required, validation.Length(minUsernameLen, maxUsernameLen), is.UTFLetterNumeric),
 		validation.Field(&u.Password, validation.Required, validation.Length(minPassLen, maxPassLen), is.UTFLetterNumeric),
 	); err != nil {

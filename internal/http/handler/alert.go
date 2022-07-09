@@ -15,7 +15,7 @@ type Alert struct {
 	Storage storage.Alert
 }
 
-func (a Alert) GetAlert(c *fiber.Ctx) error {
+func (a *Alert) GetAlert(c *fiber.Ctx) error {
 	// extract username
 	user := c.Locals("user").(*jwt.Token)
 	claims := user.Claims.(jwt.MapClaims)
@@ -23,24 +23,24 @@ func (a Alert) GetAlert(c *fiber.Ctx) error {
 
 	req := new(request.Alert)
 	if err := c.BodyParser(req); err != nil {
-		log.Printf("cannot load alert data %s", err)
+		log.Printf("cannot load alert data", err)
 
 		return fiber.ErrBadRequest
 	}
 	if err := req.Validate(); err != nil {
-		log.Printf("cannot validate alert data %s", err)
+		log.Printf("cannot validate alert data", err)
 
 		return fiber.ErrBadRequest
 	}
 
 	alerts, err := a.Storage.GetAlerts(c.Context(), req.UrlName, username)
 	if err != nil {
-		log.Printf("cannot load alerts %s", err)
+		log.Printf("cannot load alerts", err)
 		return fiber.ErrInternalServerError
 	}
 	return c.Status(http.StatusOK).JSON(alerts)
 }
 
-func (a Alert) Register(g fiber.Router) {
+func (a *Alert) Register(g fiber.Router) {
 	g.Post("/alerts", a.GetAlert)
 }

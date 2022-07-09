@@ -37,7 +37,7 @@ func main() {
 				// create the db and pass it to the handler
 				db, err := database.NewDB()
 				if err != nil {
-					log.Fatalf("database connection failed %s", err)
+					log.Fatalf("database connection failed", err)
 				}
 
 				hu := handler.User{
