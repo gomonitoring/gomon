@@ -6,15 +6,17 @@ import (
 	log "github.com/sirupsen/logrus"
 
 	"github.com/RichardKnop/machinery/v1/tasks"
-	"github.com/gomonitoring/http-server/internal/database"
-	"github.com/gomonitoring/http-server/internal/model"
+	"github.com/gomonitoring/http-server/internal/machinery/worker"
+	"github.com/gomonitoring/http-server/internal/storage"
 )
 
 func FindUrlsToCall() error {
-	db, _ := database.NewDB()
-	var urls []model.Url
-	query := db.Find(&urls)
-	groupSigs := make([]*tasks.Signature, query.RowsAffected)
+	var st storage.LocalWorker = worker.GetLocalWorkerStorage()
+	urls, er := st.GetUrlsToCall()
+	if er != nil {
+		log.Errorln("could not get urls to call", er)
+	}
+	groupSigs := make([]*tasks.Signature, len(urls))
 	for i, url := range urls {
 		threshhold, _ := strconv.Atoi(url.Threshold)
 		sig := tasks.Signature{
@@ -50,7 +52,7 @@ func FindUrlsToCall() error {
 	chord, _ := tasks.NewChord(group, &collectorSig)
 	_, err := GetMachineryServer().SendChord(chord, 0)
 	if err != nil {
-		log.Fatal("Could not push call_url tasks to queue.")
+		log.Fatal("could not push call_url tasks to queue.")
 	}
 	log.Infoln("pushed call_url tasks to queue.")
 	return nil

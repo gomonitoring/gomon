@@ -29,3 +29,9 @@ type Url interface {
 type Alert interface {
 	GetAlerts(context.Context, string, string) ([]model.Alert, error)
 }
+
+type LocalWorker interface {
+	GetUrlsToCall() ([]model.Url, error)
+	SaveAlert(int64, uint) error
+	SaveCallResults([]model.CallUrlResult) error
+}

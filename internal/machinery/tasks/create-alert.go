@@ -1,20 +1,17 @@
 package tasks
 
 import (
-	"github.com/gomonitoring/http-server/internal/database"
-	"github.com/gomonitoring/http-server/internal/model"
+	"github.com/gomonitoring/http-server/internal/machinery/worker"
+	"github.com/gomonitoring/http-server/internal/storage"
 	log "github.com/sirupsen/logrus"
 )
 
 func CreateAlert(id uint, time int64) error {
-	db, _ := database.NewDB()
-	err := db.Create(&model.Alert{
-		Time:  time,
-		UrlID: id,
-	}).Error
+	var st storage.LocalWorker = worker.GetLocalWorkerStorage()
+	err := st.SaveAlert(time, id)
 	if err != nil {
-		log.Fatalln("Could not create alert", err)
+		log.Fatalln("could not create alert", err)
 	}
-	log.Infoln("An alert created")
+	log.Infoln("an alert created")
 	return nil
 }

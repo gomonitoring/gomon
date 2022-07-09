@@ -107,3 +107,30 @@ func (p *PostgresDB) GetAlerts(ctx context.Context, urlName string, username str
 			Where("username = ?", username), urlName)).Find(&alerts)
 	return alerts, nil
 }
+
+func (p *PostgresDB) GetUrlsToCall() ([]model.Url, error) {
+	var urls []model.Url
+	p.db.Find(&urls)
+	return urls, nil
+}
+
+func (p *PostgresDB) SaveAlert(time int64, urlId uint) error {
+	err := p.db.Create(&model.Alert{
+		Time:  time,
+		UrlID: urlId,
+	}).Error
+	return err
+}
+
+func (p *PostgresDB) SaveCallResults(callResults []model.CallUrlResult) error {
+	calls := make([]model.Call, len(callResults))
+	for i, c := range callResults {
+		calls[i] = model.Call{
+			Time:       c.Time,
+			StatusCode: c.StatusCode,
+			UrlID:      c.Id,
+			Successful: c.StatusCode < 500 && c.StatusCode > 99,
+		}
+	}
+	return p.db.Create(&calls).Error
+}

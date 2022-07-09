@@ -5,6 +5,7 @@ import (
 
 	"github.com/gomonitoring/http-server/internal/model"
 	"github.com/gomonitoring/http-server/internal/settings"
+	log "github.com/sirupsen/logrus"
 	"gorm.io/driver/postgres"
 	"gorm.io/gorm"
 )
@@ -22,9 +23,9 @@ func NewDB() (*gorm.DB, error) {
 		panic("failed to connect database")
 	}
 
-	fmt.Println("Connection Opened to Database")
+	log.Println("connection opened to database")
 	db.AutoMigrate(&model.User{}, &model.Url{}, &model.Call{}, &model.Alert{})
-	fmt.Println("Database Migrated")
+	log.Println("database migrated")
 
 	return db, nil
 }
