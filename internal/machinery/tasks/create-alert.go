@@ -13,7 +13,7 @@ func CreateAlert(id uint, time int64) error {
 		UrlID: id,
 	}).Error
 	if err != nil {
-		log.Fatalln("Could not create alert %s", err)
+		log.Fatalln("Could not create alert", err)
 	}
 	log.Infoln("An alert created")
 	return nil

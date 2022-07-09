@@ -31,7 +31,7 @@ func CollectResults(results ...string) error {
 	}
 	err := db.Create(&calls).Error
 	if err != nil {
-		log.Fatalln("Could not collect url call results %s", err)
+		log.Fatalln("Could not collect url call results ", err)
 	}
 	log.Infoln("Url call results collected")
 	return nil
