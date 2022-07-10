@@ -1,6 +1,6 @@
 # GoMon
 A simple uptime monitoring service written in go.
-Users can register urls to this service with their desired threshold and the service will call the url with a GET request at a predesignated period. Once non 200 responses in the past 5m exceed the threshold an alert will be created.
+Users can register urls to this service with their desired threshold and the service will call the url with a GET request at a predesignated period. Once 5xx responses in the past 5m exceed the threshold an alert will be created.
 You can also query the service for the number of successful and failed calls in the past 24h. 
 
 ---
