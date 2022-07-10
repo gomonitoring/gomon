@@ -6,8 +6,8 @@ import (
 	log "github.com/sirupsen/logrus"
 
 	"github.com/RichardKnop/machinery/v1/tasks"
-	"github.com/gomonitoring/http-server/internal/machinery/worker"
-	"github.com/gomonitoring/http-server/internal/storage"
+	"github.com/gomonitoring/gomon/internal/machinery/worker"
+	"github.com/gomonitoring/gomon/internal/storage"
 )
 
 func FindUrlsToCall() error {

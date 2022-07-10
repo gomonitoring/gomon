@@ -1,4 +1,4 @@
-module github.com/gomonitoring/http-server
+module github.com/gomonitoring/gomon
 
 go 1.17
 

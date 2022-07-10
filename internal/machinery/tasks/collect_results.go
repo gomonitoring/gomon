@@ -8,10 +8,10 @@ import (
 
 	"github.com/RichardKnop/machinery/v1/tasks"
 	"github.com/go-redis/redis"
-	"github.com/gomonitoring/http-server/internal/machinery/worker"
-	"github.com/gomonitoring/http-server/internal/model"
-	"github.com/gomonitoring/http-server/internal/settings"
-	"github.com/gomonitoring/http-server/internal/storage"
+	"github.com/gomonitoring/gomon/internal/machinery/worker"
+	"github.com/gomonitoring/gomon/internal/model"
+	"github.com/gomonitoring/gomon/internal/settings"
+	"github.com/gomonitoring/gomon/internal/storage"
 )
 
 func CollectResults(results ...string) error {
