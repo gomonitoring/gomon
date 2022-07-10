@@ -9,3 +9,7 @@ services:
     monitoring_worker:
       environment:
         MONITORING_SERVER_CONCURRENCY: 10
+    
+    local_worker:
+      environment:
+        LOCAL_WORKER_CONCURRENCY: 1
