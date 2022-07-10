@@ -10,11 +10,13 @@ To run the service in a test environment you can simply use the provided docker 
 cd gomon  # pwd -> <proj-repo>/gomon/
 docker-compose up -d
 ```
-To run the service with some predefined random urls, config the docker compose populate file and run:
+To experiment the concurrency capabilities, config the docker-compose.experiment file and after running the following commands, check the monitoring and local worker logs.
 ```bash
 cd gomon  # pwd -> <proj-repo>/gomon/
-docker-compose -f docker-compose.yml -f docker-compose.populate.yml up -d
+docker-compose -f docker-compose.yml -f docker-compose.experiment.yml up -d
 ```
+Along with bringing up the stack, this will populate the database with some random urls using `POPULATE_URL_COUNT` which shows the number of urls to be populated. Note that you need `MAX_URL_COUNT >= POPULATE_URL_COUNT` for proper operation.
+
 *Warning: this compose file might not be suitable for use in production environments and should only be used for testing purposes*
 
 ---
