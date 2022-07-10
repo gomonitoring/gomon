@@ -4,10 +4,10 @@ import (
 	"context"
 	"time"
 
-	"github.com/gomonitoring/http-server/internal/http/request"
-	"github.com/gomonitoring/http-server/internal/model"
-	"github.com/gomonitoring/http-server/internal/settings"
-	"github.com/gomonitoring/http-server/internal/utils"
+	"github.com/gomonitoring/gomon/internal/http/request"
+	"github.com/gomonitoring/gomon/internal/model"
+	"github.com/gomonitoring/gomon/internal/settings"
+	"github.com/gomonitoring/gomon/internal/utils"
 	"gorm.io/gorm"
 )
 

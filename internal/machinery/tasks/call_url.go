@@ -6,7 +6,7 @@ import (
 	"net/http"
 	"time"
 
-	"github.com/gomonitoring/http-server/internal/model"
+	"github.com/gomonitoring/gomon/internal/model"
 	log "github.com/sirupsen/logrus"
 )
 

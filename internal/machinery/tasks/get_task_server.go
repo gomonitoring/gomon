@@ -3,7 +3,7 @@ package tasks
 import (
 	"github.com/RichardKnop/machinery/v1"
 	"github.com/RichardKnop/machinery/v1/config"
-	"github.com/gomonitoring/http-server/internal/settings"
+	"github.com/gomonitoring/gomon/internal/settings"
 )
 
 func GetMachineryServer() *machinery.Server {

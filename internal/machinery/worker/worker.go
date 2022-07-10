@@ -5,9 +5,9 @@ import (
 
 	"github.com/RichardKnop/machinery/v1"
 	"github.com/RichardKnop/machinery/v1/tasks"
-	"github.com/gomonitoring/http-server/internal/database"
-	"github.com/gomonitoring/http-server/internal/settings"
-	"github.com/gomonitoring/http-server/internal/storage"
+	"github.com/gomonitoring/gomon/internal/database"
+	"github.com/gomonitoring/gomon/internal/settings"
+	"github.com/gomonitoring/gomon/internal/storage"
 )
 
 var postgresStorage storage.LocalWorker

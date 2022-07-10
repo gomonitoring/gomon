@@ -3,8 +3,8 @@ package database
 import (
 	"fmt"
 
-	"github.com/gomonitoring/http-server/internal/model"
-	"github.com/gomonitoring/http-server/internal/settings"
+	"github.com/gomonitoring/gomon/internal/model"
+	"github.com/gomonitoring/gomon/internal/settings"
 	log "github.com/sirupsen/logrus"
 	"gorm.io/driver/postgres"
 	"gorm.io/gorm"

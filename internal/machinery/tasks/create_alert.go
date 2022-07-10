@@ -1,8 +1,8 @@
 package tasks
 
 import (
-	"github.com/gomonitoring/http-server/internal/machinery/worker"
-	"github.com/gomonitoring/http-server/internal/storage"
+	"github.com/gomonitoring/gomon/internal/machinery/worker"
+	"github.com/gomonitoring/gomon/internal/storage"
 	log "github.com/sirupsen/logrus"
 )
 
