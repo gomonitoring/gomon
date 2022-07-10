@@ -28,8 +28,8 @@ curl --location --request POST 'localhost:8010/url/register-url' \
 --header 'Authorization: Bearer jwt token' \
 --header 'Content-Type: application/json' \
 --data-raw '{
-    "name": "snapp",
-    "url": "https://snapp.ir",
+    "name": "google",
+    "url": "https://google.com",
     "threshold": "5"
 }'
 ```
@@ -50,7 +50,7 @@ curl --location --request POST 'localhost:8010/url/stats' \
 --header 'Authorization: Bearer jwt token' \
 --header 'Content-Type: application/json' \
 --data-raw '{
-    "name": "snapp"
+    "name": "google"
 }'
 ```
 
