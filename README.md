@@ -60,9 +60,17 @@ You can introduce replicas of the monitoring worker to increase concurrency and 
 
 The http server is stateless and therefore can also scale like monitoring worker. You'd probably want to increase the number of replicas if your instance is experiencing higher traffic.
 
-Since data on one url doesn't have any codependence on data from other urls, you can also partition the database tables by url id and have a local worker instance with it's own redis cache for each partition, this will make handling url call failures and report aggregation.\
+Since data on one url doesn't have any codependence on data from other urls, you can also partition the database tables by url id and have a local worker instance with it's own redis 
+cache for each partition, this will make handling url call failures and report aggregation.\
 Multiple local workers can share the same redis cache however it is recommended for each worker to have it's own cache on the same physical node to minimise latency.
 Also, never deploy two local workers on the same database partition as this will cause periodic tasks to be run twice.
 
 A fully scaled deployment might look something like this:
 ![advanced deployment](./gomon_advanced.png)
+
+
+## Kubernetes
+
+Services and Deployment YAMLs:
+
+https://github.com/gomonitoring/k8s/tree/main
